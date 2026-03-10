@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Solar Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body {
+  font-family: Arial;
+  background: #0f172a;
+  color: white;
+  text-align: center;
+}
+
+.card {
+  background: #1e293b;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 12px;
+}
+
+.value {
+  font-size: 32px;
+  font-weight: bold;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Solar Dashboard</h1>
+
+<div class="card">
+<h2>Solar Output</h2>
+<div class="value" id="solar">-- W</div>
+</div>
+
+<div class="card">
+<h2>Battery Level</h2>
+<div class="value" id="battery">-- %</div>
+</div>
+
+<div class="card">
+<h2>Home Consumption</h2>
+<div class="value" id="home">-- W</div>
+</div>
+
+<script>
+async function updateData() {
+
+  const res = await fetch("/api/solar")
+  const data = await res.json()
+
+  document.getElementById("solar").innerText = data.solar + " W"
+  document.getElementById("battery").innerText = data.battery + " %"
+  document.getElementById("home").innerText = data.home + " W"
+
+}
+
+setInterval(updateData, 5000)
+
+</script>
+
+</body>
+</html>
